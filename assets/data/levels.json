@@ -1,0 +1,32 @@
+{
+    "level1": {
+        "rows"   : 4,
+        "columns": 3,
+        "baddies": 0
+    },
+    "level2": {
+        "rows"   : 4,
+        "columns": 3,
+        "baddies": 0
+    },
+    "level3": {
+        "rows"   : 4,
+        "columns": 4,
+        "baddies": 0
+    },
+    "level4": {
+        "rows"   : 4,
+        "columns": 4,
+        "baddies": 1
+    },
+    "level5": {
+        "rows"   : 6,
+        "columns": 5,
+        "baddies": 3
+    },
+    "level6": {
+        "rows"   : 5,
+        "columns": 6,
+        "baddies": 2
+    }
+}
