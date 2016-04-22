@@ -50,7 +50,7 @@ NN.GameState.moveBaddie = function (baddie) {
     }
 
     // wait for a moveInterval, then move again.
-    var moveInterval = 1000;
+    var moveInterval = 1000 + Math.floor(Math.random() * 100);
     this.moveBaddieTimer = this.game.time.events.add(moveInterval, function(){
         this.moveBaddie(baddie);
     }, this);
