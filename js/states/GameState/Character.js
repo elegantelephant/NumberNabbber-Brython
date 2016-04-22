@@ -139,15 +139,23 @@ NN.GameState.nab = function() {
     var index = this.answers[number.text];
     if (index) {
         this.nabbing = true;
+        var src_x = number.x;
+        var src_y = number.y;
+        var dst_text = number.text;
         if (this.currentLevel > 1) {
             this.newNumber(posX, posY);
         }
         // move the number we are nabbing to the top of the screen
-        var moveText = this.game.add.tween(number);
         var target = this.nabbedText.children[index-1];
-        moveText.to({x: target.x, y: target.y}, 500);
+        var dst_x = target.x;
+        var dst_y = target.y;
+        var moveText = this.game.add.tween(target);
+        target.x = src_x;
+        target.y = src_y;
+        target.text = dst_text;
+        moveText.to({x: dst_x, y: dst_y}, 500);
         moveText.onComplete.add(function() {
-            this.nabbed[index-1] = number.text;
+            this.nabbed[index-1] = dst_text;
             this.updateNabbedText();
             this.nabbing = false;
         }, this);

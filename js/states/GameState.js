@@ -237,7 +237,9 @@ NN.GameState.createBoard = function(columns, rows) {
 NN.GameState.newNumber = function(posX, posY) {
     var index = Math.floor(Math.random() * this.pool.length);
     var newnum = this.pool.splice(index, 1)[0];
-    var number = this.game.add.text(this.GAMEX / 2, this.GAMEY - this.boardSizeY / 2);
+    var number = this.board[posX][posY];
+    number.x = this.GAMEX / 2;
+    number.y = this.GAMEY - this.boardSizeY / 2;
     number.text = newnum;
     number.style.font = 'bold 25pt Arial';
     number.style.fill = '#fff';
@@ -246,7 +248,7 @@ NN.GameState.newNumber = function(posX, posY) {
     var coords = this.coordsFromPos(posX, posY);
     moveText.to({x: coords[0], y: coords[1]}, 500);
     moveText.onComplete.add(function() {
-        this.board[posX][posY] = number;
+        // this.board[posX][posY] = number;
     }, this);
     moveText.start();
 };
