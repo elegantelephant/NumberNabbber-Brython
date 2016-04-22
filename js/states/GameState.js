@@ -303,8 +303,8 @@ NN.GameState.pushEmOut = function() {
     if (this.pushing) {
         return;
     }
-    this.pushing = true
-        var cols = this.levelData.columns;
+    this.pushing = true;
+    var cols = this.levelData.columns;
     var rows = this.levelData.rows;
     var target = [];
     for (var x = 0; x < cols; x++) {
@@ -321,3 +321,10 @@ NN.GameState.pushEmOut = function() {
     }
 };
 
+NN.GameState.checkWin = function() {
+    for (var i = 0; i < 12; i++) {
+        if (!this.nabbed[i])
+            return; // Not won
+    }
+    console.log("You win!");
+};

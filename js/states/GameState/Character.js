@@ -158,6 +158,7 @@ NN.GameState.nab = function() {
             this.nabbed[index-1] = dst_text;
             this.updateNabbedText();
             this.nabbing = false;
+            this.checkWin();
         }, this);
         moveText.start();
     }
