@@ -51,8 +51,8 @@
     },
     "level11": {
         "rows"   : 6,
-        "columns": 5,
-        "baddies": 4
+        "columns": 6,
+        "baddies": 5
     },
     "level12": {
         "rows"   : 6,
