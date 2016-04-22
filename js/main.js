@@ -4,4 +4,4 @@ var NN = NN || {};
 NN.game = new Phaser.Game(360, 640, Phaser.AUTO);
 
 NN.game.state.add('GameState', NN.GameState);
-NN.game.state.start('GameState');    
+NN.game.state.start('GameState');
