@@ -5,6 +5,7 @@ NN.GameState = NN.GameState || {};
 NN.GameState.init = function(currentLevel) {
 
     // game constants
+    this.game.stage.backgroundColor = '#000';
 
     // level data
     this.currentLevel = currentLevel ? currentLevel : 1;

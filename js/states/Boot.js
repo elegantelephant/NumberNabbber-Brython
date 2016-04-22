@@ -4,6 +4,7 @@ NN.BootState = NN.BootState || {};
 
 NN.BootState.init = function() {
     this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    this.game.stage.backgroundColor = '#aaa';
 };
 
 NN.BootState.preload = function() {

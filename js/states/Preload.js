@@ -19,6 +19,6 @@ NN.PreloadState.preload = function() {
 
 NN.PreloadState.create = function() {
     this.game.time.events.add(Phaser.Timer.SECOND * 2, function() {
-        this.state.start('GameState');
+        this.state.start('HomeState');
     }, this);
 };
