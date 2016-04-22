@@ -280,7 +280,7 @@ NN.GameState.pullEmIn = function() {
     for (var x = 0; x < cols; x++) {
         for (var y = 0; y < rows; y++) {
             var moveText = this.game.add.tween(this.board[x][y]);
-            var target = this.coordsFromPos( (rows-1) / 2, (cols-1) / 2);
+            var target = this.coordsFromPos( (cols-1) / 2, (rows-1) / 2);
             moveText.to({x: target[0], y: target[1]}, 500);
             moveText.start();
         }
