@@ -325,7 +325,7 @@ NN.GameState.checkWin = function() {
             return; // Not won
     }
     var nextLevel = this.currentLevel + 1;
-    if (nextLevel > this.numLevels) {
+    if (nextLevel > this.game.numLevels) {
         console.log("You win!");
     }
     else {
