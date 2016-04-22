@@ -7,9 +7,7 @@ NN.GameState.init = function(currentLevel) {
     // game constants
 
     // level data
-    this.numLevels = 20;
-    this.currentLevel = 4;
-    this.currentLevel = this.currentLevel ? this.currentLevel : 1;
+    this.currentLevel = currentLevel ? currentLevel : 1;
 
     this.GAMEX = this.game.world.width;
     this.GAMEY = this.game.world.height;
@@ -326,5 +324,11 @@ NN.GameState.checkWin = function() {
         if (!this.nabbed[i])
             return; // Not won
     }
-    console.log("You win!");
+    var nextLevel = this.currentLevel + 1;
+    if (nextLevel > this.numLevels) {
+        console.log("You win!");
+    }
+    else {
+        this.game.state.restart(true, false, nextLevel);
+    }
 };
