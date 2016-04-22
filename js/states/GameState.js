@@ -130,7 +130,7 @@ NN.GameState.update = function() {
         this.pushEmOut();
         if (this.time.now - this.timeCheck > 2000) {
             this.nabbing = false;
-            this.timeCheck = false;           
+            this.timeCheck = false;
         }
     }
 
@@ -262,10 +262,10 @@ NN.GameState.updateNabbedText = function() {
     for (var i = 0; i < this.nabbed.length; i++) {
         var number = this.nabbed[i];
         if (number) {
-            this.nabbedText.children[i].text = number; 
+            this.nabbedText.children[i].text = number;
         }
         else {
-            this.nabbedText.children[i].text = '__'; 
+            this.nabbedText.children[i].text = '__';
         }
     }
 };
@@ -273,7 +273,7 @@ NN.GameState.updateNabbedText = function() {
 NN.GameState.mixEmUp = function() {
     this.timeCheck = this.time.now;
     this.nabbing = true;
-    library.shuffleDeeply(this.board); 
+    library.shuffleDeeply(this.board);
     this.pullEmIn();
 };
 
