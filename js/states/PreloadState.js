@@ -14,9 +14,7 @@ NN.PreloadState.preload = function() {
     this.load.spritesheet('player', 'assets/images/Green_Circles_100.png', 100, 100, 4, 0, 0);
     this.load.spritesheet('baddie', 'assets/images/Red_Circles_100.png', 100, 100, 4, 0, 0);
 
-    this.game.numLevels = 4;
-    for (var i = 1; i <= this.game.numLevels; i++)
-        this.load.text('level' + i, 'assets/data/level' + i + '.json');
+    this.load.text('levels', 'assets/data/levels.json');
 };
 
 NN.PreloadState.create = function() {

@@ -104,7 +104,13 @@ NN.GameState.update = function() {
 };
 
 NN.GameState.loadLevel = function() {
-    this.levelData = JSON.parse(this.game.cache.getText('level' + this.currentLevel));
+    var levels = JSON.parse(this.game.cache.getText('levels'));
+    if (!this.game.numLevels) {
+        var i = 1;
+        while (levels['level' + i])
+            this.game.numLevels = i++;
+    }
+    this.levelData = levels['level' + this.currentLevel];
 };
 
 NN.GameState.createBackground = function(columns, rows) {
@@ -322,7 +328,7 @@ NN.GameState.pushEmOut = function() {
 NN.GameState.checkWin = function() {
     for (var i = 0; i < 12; i++) {
         if (!this.nabbed[i])
-            return; // Not won
+            return; // Not won yet
     }
     var nextLevel = this.currentLevel + 1;
     if (nextLevel > this.game.numLevels) {
