@@ -26,7 +26,77 @@
     },
     "level6": {
         "rows"   : 5,
-        "columns": 6,
+        "columns": 4,
         "baddies": 2
+    }
+    "level7": {
+        "rows"   : 5,
+        "columns": 4,
+        "baddies": 2
+    }
+    "level8": {
+        "rows"   : 6,
+        "columns": 4,
+        "baddies": 3
+    }
+    "level9": {
+        "rows"   : 6,
+        "columns": 4,
+        "baddies": 3
+    }
+    "level10": {
+        "rows"   : 8,
+        "columns": 5,
+        "baddies": 6
+    }
+    "level11": {
+        "rows"   : 6,
+        "columns": 4,
+        "baddies": 4
+    }
+    "level12": {
+        "rows"   : 6,
+        "columns": 4,
+        "baddies": 4
+    }
+    "level13": {
+        "rows"   : 6,
+        "columns": 4,
+        "baddies": 4
+    }
+    "level14": {
+        "rows"   : 6,
+        "columns": 4,
+        "baddies": 4
+    }
+    "level15": {
+        "rows"   : 6,
+        "columns": 4,
+        "baddies": 4
+    }
+    "level16": {
+        "rows"   : 6,
+        "columns": 4,
+        "baddies": 4
+    }
+    "level17": {
+        "rows"   : 6,
+        "columns": 4,
+        "baddies": 4
+    }
+    "level18": {
+        "rows"   : 6,
+        "columns": 4,
+        "baddies": 4
+    }
+    "level19": {
+        "rows"   : 6,
+        "columns": 4,
+        "baddies": 4
+    }
+    "level20": {
+        "rows"   : 9,
+        "columns": 6,
+        "baddies": 10
     }
 }
