@@ -23,8 +23,12 @@ NN.HomeState.create = function() {
 
     //this.buttonImage.ctx.fillRect(0, 0, button_width - 1, button_height - 1);
 
-    this.startButton = this.add.button(this.game.width / 2, this.game.height * 4 / 5, this.buttonText, NN.HomeState.start, this),
+    //this.startButton = this.add.button(this.game.width / 2, this.game.height * 4 / 5, this.buttonText, NN.HomeState.start, this),
+    this.startButton = this.add.button(this.game.width / 2, this.game.height * 4 / 6, 'play_button', NN.HomeState.start, this),
     this.startButton.anchor.setTo(0.5);
+    this.startButton.scale.setTo(0.5);
+
+    //this.startButton.onInputOut.add(over, this);
     //this.startButton.style.font = 'Arial';
     //this.startButton.style.fontSize = '80%';
     //this.startButton.style.color = '#fff';

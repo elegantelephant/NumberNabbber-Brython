@@ -11,6 +11,8 @@ NN.PreloadState.preload = function() {
 
     //this.load.image('player', 'assets/images/NN-Player.jpg');
     this.load.image('tile', 'assets/images/basicTile.png');
+    this.load.image('play_button', 'assets/images/Play.png');
+    this.load.image('levels_button', 'assets/images/Level_Icon.png');
     this.load.spritesheet('player', 'assets/images/Green_Circles_100.png', 100, 100, 4, 0, 0);
     this.load.spritesheet('baddie', 'assets/images/Red_Circles_100.png', 100, 100, 4, 0, 0);
 
