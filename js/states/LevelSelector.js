@@ -16,8 +16,8 @@ NN.LevelSelectorState.create = function() {
         var buttonY = (2 + Math.floor((i-1) / 4)) * this.game.width / 5;
         this.levelsButton = this.add.button(buttonX, buttonY, 'level_button', NN.LevelSelectorState.startGameState, this),
         this.levelsButton.anchor.setTo(0.5);
-        this.levelsButton.width = this.game.width / 5;
-        this.levelsButton.height = this.game.width / 5;
+        this.levelsButton.width = this.game.width / 5 - 2;
+        this.levelsButton.height = this.game.width / 5 - 2;
         this.levelsButton.customParams = {};
         this.levelsButton.customParams.levelNumber = i;
 
