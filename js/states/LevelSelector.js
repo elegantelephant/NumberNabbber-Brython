@@ -7,32 +7,30 @@ NN.LevelSelectorState.init = function() {
 };
 
 NN.LevelSelectorState.preload = function() {
-
 };
 
 NN.LevelSelectorState.create = function() {
     var i = 1;
     while (i <= 20) {
-        var buttonX = (1 + (i % 4) * this.game.width) / 6;
-        var buttonY = (2 + (i / 4) * this.game.height) / 7;
-        this.levelsButton = this.add.button(buttonX, buttonY, 'levels_button', NN.HomeState.start, this),
-        i++;
+        var buttonX = (1 + (i-1) % 4) * this.game.width / 5;
+        var buttonY = (2 + Math.floor((i-1) / 4)) * this.game.width / 5;
+        this.levelsButton = this.add.button(buttonX, buttonY, 'level_button', NN.LevelSelectorState.startGameState, this),
         this.levelsButton.anchor.setTo(0.5);
-        this.levelsButton.scale.setTo(0.25, 0.5);
+        this.levelsButton.width = this.game.width / 5;
+        this.levelsButton.height = this.game.width / 5;
+        this.levelsButton.customParams = {};
+        this.levelsButton.customParams.levelNumber = i;
+
+        this.levelText = this.add.text(buttonX, buttonY);
+        this.levelText.style.font = 'bold 30pt Arial';
+        this.levelText.style.fill = '#000';
+        this.levelText.text = i.toString();
+        this.levelText.anchor.setTo(0.5);
+
+        i++;
     }
-    //this.startButton.onInputOut.add(over, this);
-    //this.startButton.style.font = 'Arial';
-    //this.startButton.style.fontSize = '80%';
-    //this.startButton.style.color = '#fff';
-    //this.startButton.style.border = '0.1em solid #fff';
-
-    //this.startButton.onInputDown(NN.HomeState.start, this);
 };
 
-NN.HomeState.start = function() {
-    this.state.start('GameState');
-};
-
-NN.LevelSelectorState.start = function() {
-    this.state.start('LevelSelectorState');
+NN.LevelSelectorState.startGameState = function(button) {
+    this.state.start('GameState', true, false, button.customParams.levelNumber);
 };

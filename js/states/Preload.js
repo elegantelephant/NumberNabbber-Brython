@@ -13,8 +13,10 @@ NN.PreloadState.preload = function() {
     this.load.image('tile', 'assets/images/basicTile.png');
     this.load.image('play_button', 'assets/images/Play.png');
     this.load.image('levels_button', 'assets/images/Level_Icon.png');
+    this.load.image('level_button', 'assets/images/Level_Button.png');
     this.load.spritesheet('player', 'assets/images/Green_Circles_100.png', 100, 100, 4, 0, 0);
     this.load.spritesheet('baddie', 'assets/images/Red_Circles_100.png', 100, 100, 4, 0, 0);
+    this.load.spritesheet('level_icons', 'assets/images/levels.png', 64, 64, 5, 0, 0);
 
     this.load.text('levels', 'assets/data/levels.json');
 };
