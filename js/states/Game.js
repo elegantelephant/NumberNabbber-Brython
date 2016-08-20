@@ -48,7 +48,7 @@ NN.GameState.create = function() {
     var startPoint = {};
     var endPoint = {};
     var direction;
-    var minimum = 15;
+    var minimum = 12;
 
     this.game.input.onDown.add(function(pointer) {
         startPoint.x = pointer.clientX;
