@@ -8,4 +8,5 @@ NN.game.state.add('PreloadState', NN.PreloadState);
 NN.game.state.add('HomeState', NN.HomeState);
 NN.game.state.add('LevelSelectorState', NN.LevelSelectorState);
 NN.game.state.add('GameState', NN.GameState);
+NN.game.state.add('InstructionsState', NN.InstructionsState);
 NN.game.state.start('BootState');

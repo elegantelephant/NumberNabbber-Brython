@@ -2,13 +2,17 @@ var NN = NN || {};
 
 NN.GameState = NN.GameState || {};
 
-NN.GameState.init = function(currentLevel) {
+NN.GameState.init = function(currentLevel, hadInstructions) {
 
     // game constants
     this.game.stage.backgroundColor = '#000';
 
     // level data
     this.currentLevel = currentLevel ? currentLevel : 1;
+
+    if (this.currentLevel < 4 && !hadInstructions) {
+        this.state.start('InstructionsState', true, false, this.currentLevel);
+    }
 
     this.GAMEX = this.game.world.width;
     this.GAMEY = this.game.world.height;
