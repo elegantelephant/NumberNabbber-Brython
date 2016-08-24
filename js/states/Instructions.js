@@ -5,6 +5,7 @@ NN.InstructionsState = NN.InstructionsState || {};
 NN.InstructionsState.init = function(levelnum) {
     this.game.stage.backgroundColor = '#00f';
     this.levelnum = levelnum;
+    this.GAMEX = this.game.world.width;
     this.GAMEY = this.game.world.height;
 };
 
@@ -14,24 +15,39 @@ NN.InstructionsState.preload = function() {
 NN.InstructionsState.create = function() {
     var background = this.game.add.sprite(0,0,'instructions');
     background.inputEnabled = true;
+    background.x = 0;
+    background.y = 0;
+    background.height = this.GAMEY;
+    background.width = this.GAMEX;
+    // background.scaleX = (0.5);
+    // background.scaleY = (0.2);
+    // background.scaleX = (this.GAMEX / background.width);
+    // background.scaleY = (this.GAMEY / background.height);
 
-    var style = {font: 'bold 30pt Arial', fill: '#0f0'};
+    var style = {font: 'bold 24pt Arial', fill: '#0f0'};
+    var words1 = this.game.add.text(this.GAMEX/2, this.GAMEY / 3,     'Text', style);
+    var words2 = this.game.add.text(this.GAMEX/2, this.GAMEY / 2,     'Text', style);
+    var words3 = this.game.add.text(this.GAMEX/2, this.GAMEY * 2 / 3, 'Text', style);
+    words1.anchor.setTo(0.5); 
+    words2.anchor.setTo(0.5); 
+    words3.anchor.setTo(0.5); 
+
     if ( this.levelnum == 1 ) {
-        this.game.add.text(30, this.GAMEY / 3 - 10,     'Swipe to move', style);
-        this.game.add.text(30, this.GAMEY / 2 - 10,     'and tap to nab', style);
-        this.game.add.text(30, this.GAMEY * 2 / 3 - 10, 'all the answers', style);
+        words1.text = 'Swipe to move';
+        words2.text = 'and tap to nab';
+        words3.text = 'all the answers';
     }
 
     if ( this.levelnum == 2 ) {
-        this.game.add.text(30, this.GAMEY / 3 - 10,     'The answers are', style);
-        this.game.add.text(30, this.GAMEY / 2 - 10,     'multiples of the', style);
-        this.game.add.text(30, this.GAMEY * 2 / 3 - 10, 'current level', style);
+        words1.text = 'The answers are';
+        words2.text = 'multiples of the';
+        words3.text = 'current level';
     }
 
     if ( this.levelnum == 3 ) {
-        this.game.add.text(30, this.GAMEY / 3 - 10,     'Enjoy your last', style);
-        this.game.add.text(30, this.GAMEY / 2 - 10,     'level without', style);
-        this.game.add.text(30, this.GAMEY * 2 / 3 - 10, 'enemies!', style);
+        words1.text = 'Enjoy your last';
+        words2.text = 'level without';
+        words3.text = 'enemies!';
     }
 
     background.events.onInputDown.add(function() {
