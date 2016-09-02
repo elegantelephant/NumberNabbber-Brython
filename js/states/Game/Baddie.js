@@ -14,12 +14,11 @@ NN.GameState.spawnBaddie = function() {
     var spawnInterval = 4800;
     var baddie = this.createCharacter('baddie', this.baddieStartPos[0], this.baddieStartPos[1], 'left');
     this.baddies.add(baddie);
-    var beforeMoving = 1000;
+    var beforeMoving = 1300;
     this.moveBaddieTimer = this.game.time.events.add(beforeMoving, function(){
         this.moveBaddie(baddie);
     }, this);
 
-    // if (this.baddies.length < 4) {
     if (this.baddies.length < this.levelData.baddies) {
         this.nextBaddieTimer = this.game.time.events.add(spawnInterval, function(){
             this.spawnBaddie();
@@ -50,7 +49,7 @@ NN.GameState.moveBaddie = function (baddie) {
     }
 
     // wait for a moveInterval, then move again.
-    var moveInterval = 1000 + Math.floor(Math.random() * 100);
+    var moveInterval = 1300 + Math.floor(Math.random() * 100);
     this.moveBaddieTimer = this.game.time.events.add(moveInterval, function(){
         this.moveBaddie(baddie);
     }, this);

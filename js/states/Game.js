@@ -48,7 +48,9 @@ NN.GameState.create = function() {
     var startPoint = {};
     var endPoint = {};
     var direction;
-    var minimum = 12;
+    // this is the number of pixels they have to move their finger
+    //  before it consideres it as a swipe rather than a tap.
+    var swipeVsTap = 9;
 
     this.game.input.onDown.add(function(pointer) {
         startPoint.x = pointer.clientX;
@@ -67,7 +69,7 @@ NN.GameState.create = function() {
         var deltaY = endPoint.y - startPoint.y;
 
         if(Math.abs(deltaX) >= Math.abs(deltaY)) {
-            if (Math.abs(deltaX) < minimum) {
+            if (Math.abs(deltaX) < swipeVsTap) {
                 this.nab();
             }
             else if (deltaX < 0) {
@@ -78,7 +80,7 @@ NN.GameState.create = function() {
             }
         }
         else {
-            if (Math.abs(deltaY) < minimum) {
+            if (Math.abs(deltaY) < swipeVsTap) {
                 this.nab();
             }
             else if (deltaY < 0) {
