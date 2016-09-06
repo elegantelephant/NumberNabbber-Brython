@@ -22,9 +22,9 @@ NN.GameState.init = function(currentLevel, hadInstructions) {
 
     this.facing = {
         "down":  0,
-        "left":  1,
-        "up":    2,
-        "right": 3
+        "left":  2,
+        "up":    3,
+        "right": 1
     };
 };
 
