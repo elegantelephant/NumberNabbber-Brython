@@ -35,6 +35,7 @@ NN.GameState.create = function() {
 
     this.player = this.createCharacter('player', 0, 0, 'right');
     this.game.physics.arcade.enable(this.player);
+    this.player.body.setSize(60, 60, 0, 0);
     this.nabbedText = this.add.group();
     this.generateNumbers(this.currentLevel);
     this.generateNabbedText();
