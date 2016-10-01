@@ -45,55 +45,31 @@ NN.GameState.create = function() {
         this.generateBaddies();
     }
 
-    var eventDuration;
-    var startPoint = {};
-    var endPoint = {};
-    var direction;
+    // Enable SWIPING for Player Movement
+    var click_position = {};
+    var click_release = {}; 
+    var swipeVsTap = 9;
     // this is the number of pixels they have to move their finger
     //  before it consideres it as a swipe rather than a tap.
-    var swipeVsTap = 9;
 
-    this.game.input.onDown.add(function(pointer) {
-        startPoint.x = pointer.clientX;
-        startPoint.y = pointer.clientY;
+	this.game.input.onDown.add(function(pointer) {
+        click_position = library.click(pointer);
+    }, this);
+    this.game.input.onUp.add(function(pointer) {
+        click_release = library.release_click(pointer, click_position, swipeVsTap);
+        if (click_release.direction == 'tap') {
+            this.nab();
+        }           
+        else if (click_release.direction) {
+            this.moveTo(this.player, click_release.direction);
+        }  
     }, this);
 
-    // Enable SWIPING for Player Movement
-    // TODO get this functionality into the library
-    this.game.input.onUp.add(function(pointer) {
-        direction = false;
-
-        endPoint.x = pointer.clientX;
-        endPoint.y = pointer.clientY;
-
-        var deltaX = endPoint.x - startPoint.x;
-        var deltaY = endPoint.y - startPoint.y;
-
-        if(Math.abs(deltaX) >= Math.abs(deltaY)) {
-            if (Math.abs(deltaX) < swipeVsTap) {
-                this.nab();
-            }
-            else if (deltaX < 0) {
-                direction = 'left';
-            }
-            else {
-                direction = 'right';
-            }
-        }
-        else {
-            if (Math.abs(deltaY) < swipeVsTap) {
-                this.nab();
-            }
-            else if (deltaY < 0) {
-                direction = 'up';
-            }
-            else {
-                direction = 'down';
-            }
-        }
-        if (direction) {
-            this.moveTo(this.player, direction);
-        }
+    this.startTime = new Date();
+    this.timeElapsed = 0;
+    this.createTimer();
+    this.gameTimer = this.game.time.events.loop(100, function(){
+        this.updateTimer();
     }, this);
 };
 
@@ -333,16 +309,51 @@ NN.GameState.pushEmOut = function() {
     }
 };
 
+NN.GameState.createTimer = function() {
+    this.timeLabel = this.game.add.text(7, 100, "00:00"); 
+    this.timeLabel.style.font = '25pt Arial';
+    this.timeLabel.style.fill = '#fff';
+};
+
+NN.GameState.updateTimer = function() {
+	var currentTime = new Date();
+	var timeDifference = currentTime.getTime() - this.startTime.getTime();
+    this.timeElapsed = timeDifference / 1000;
+
+    var prettyTime = this.stringifyTime(this.timeElapsed);
+    this.timeLabel.text = prettyTime;
+};
+
+NN.GameState.stringifyTime = function(totalSeconds) {
+    var minutes = Math.floor(totalSeconds / 60);
+    var seconds = Math.floor(totalSeconds) - (60 * minutes);
+
+    var result = (minutes < 10) ? "0" + minutes : minutes;
+    result += (seconds < 10) ? ":0" + seconds : ":" + seconds;
+    return result;
+};
+
 NN.GameState.checkWin = function() {
     for (var i = 0; i < 12; i++) {
         if (!this.nabbed[i])
             return; // Not won yet
     }
+    this.updateBestTime();
     var nextLevel = this.currentLevel + 1;
+
     if (nextLevel > this.game.numLevels) {
         console.log("You win!");
     }
     else {
         this.game.state.restart(true, false, nextLevel);
+    }
+};
+
+NN.GameState.updateBestTime = function() {
+    this.bestTime = +localStorage.getItem('bestTime' + this.currentLevel);
+    if (!this.bestTime || this.bestTime > this.timeElapsed) {
+        this.bestTime = this.timeElapsed;
+        localStorage.setItem('bestTime' + this.currentLevel, this.bestTime);
+        console.log("New Record!!!");
     }
 };
