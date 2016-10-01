@@ -34,7 +34,7 @@ NN.LevelSelectorState.create = function() {
             // show records
             this.recordText.text = record[i];
         }
-        if (!record[i-1] && i > 1) {
+        else if (!record[i-1] && i > 1) {
             // unlock if previous level is beaten
             this.recordText.text = 'LOCK';
         }
