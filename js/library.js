@@ -51,3 +51,44 @@ library.range = function(first, last, interval) {
     return numbers;
 };
 
+library.click = function(pointer) {
+    var startPoint = {};
+    startPoint.x = pointer.clientX;
+    startPoint.y = pointer.clientY;
+    return startPoint; 
+};
+
+library.release_click = function(pointer, startPoint, swipeTolerance) {
+    var endPoint = {};
+    endPoint.direction = false;
+
+    endPoint.x = pointer.clientX;
+    endPoint.y = pointer.clientY;
+
+    var deltaX = endPoint.x - startPoint.x;
+    var deltaY = endPoint.y - startPoint.y;
+
+    if(Math.abs(deltaX) >= Math.abs(deltaY)) {
+        if (Math.abs(deltaX) < swipeTolerance) {
+            endPoint.direction = 'tap';
+        }
+        else if (deltaX < 0) {
+            endPoint.direction = 'left';
+        }
+        else {
+            endPoint.direction = 'right';
+        }
+    }
+    else {
+        if (Math.abs(deltaY) < swipeTolerance) {
+            this.nab();
+        }
+        else if (deltaY < 0) {
+            endPoint.direction = 'up';
+        }
+        else {
+            endPoint.direction = 'down';
+        }
+    }
+    return endPoint;
+};
