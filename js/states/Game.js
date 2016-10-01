@@ -324,12 +324,17 @@ NN.GameState.updateTimer = function() {
     this.timeLabel.text = prettyTime;
 };
 
-NN.GameState.stringifyTime = function(totalSeconds) {
-    var minutes = Math.floor(totalSeconds / 60);
-    var seconds = Math.floor(totalSeconds) - (60 * minutes);
+NN.GameState.stringifyTime = function(timeToConvert) {
+    // just in case the tome is a string and not a number
+    var totalSeconds = +timeToConvert;
+    var result;
+    if (totalSeconds > 0) {
+        var minutes = Math.floor(totalSeconds / 60);
+        var seconds = Math.floor(totalSeconds) - (60 * minutes);
 
-    var result = (minutes < 10) ? "0" + minutes : minutes;
-    result += (seconds < 10) ? ":0" + seconds : ":" + seconds;
+        result = (minutes < 10) ? "0" + minutes : minutes;
+        result += (seconds < 10) ? ":0" + seconds : ":" + seconds;
+    }
     return result;
 };
 
