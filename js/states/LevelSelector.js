@@ -13,9 +13,11 @@ NN.LevelSelectorState.create = function() {
     var i = 1;
     var record = [];
     var storedRecord;
+    var buttonX;
+    var buttonY;
     while (i <= 20) {
-        var buttonX = (1 + (i-1) % 4) * this.game.width / 5;
-        var buttonY = (2 + Math.floor((i-1) / 4)) * this.game.width / 5;
+        buttonX = (1 + (i-1) % 4) * this.game.width / 5;
+        buttonY = (2 + Math.floor((i-1) / 4)) * this.game.width / 5;
         this.levelsButton = this.add.button(buttonX, buttonY, 'level_button', NN.LevelSelectorState.startGameState, this),
         this.levelsButton.anchor.setTo(0.5);
         this.levelsButton.width = this.game.width / 5 - 2;
@@ -37,6 +39,8 @@ NN.LevelSelectorState.create = function() {
         else if (!record[i-1] && i > 1) {
             // unlock if previous level is beaten
             this.recordText.text = 'LOCK';
+            this.levelsButton.input.enabled = false;
+            // set the 'lock' attribute of this button to 'true' ... somehow
         }
 
         this.levelText = this.add.text(buttonX, buttonY);
