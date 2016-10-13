@@ -9,11 +9,13 @@ NN.GameState.init = function(currentLevel, hadInstructions) {
 
     // level data
     this.currentLevel = currentLevel ? currentLevel : 1;
+    this.nextLevel = this.currentLevel + 1;
 
     if (this.currentLevel < 4 && !hadInstructions) {
         this.state.start('InstructionsState', true, false, this.currentLevel);
     }
 
+    this.gameOver = false;
     this.GAMEX = this.game.world.width;
     this.GAMEY = this.game.world.height;
 
@@ -74,6 +76,7 @@ NN.GameState.create = function() {
 };
 
 NN.GameState.update = function() {
+    if (this.gameOver) { return };
     if (this.timeCheck && this.time.now - this.timeCheck > 1500) {
         this.pushEmOut();
         if (this.time.now - this.timeCheck > 2000) {
@@ -316,6 +319,7 @@ NN.GameState.createTimer = function() {
 };
 
 NN.GameState.updateTimer = function() {
+    if (this.gameOver) { return };
 	var currentTime = new Date();
 	var timeDifference = currentTime.getTime() - this.startTime.getTime();
     this.timeElapsed = timeDifference / 1000;
@@ -343,22 +347,60 @@ NN.GameState.checkWin = function() {
         if (!this.nabbed[i])
             return; // Not won yet
     }
+    this.gameOver = true;
+    this.yourTime = this.timeElapsed;
     this.updateBestTime();
-    var nextLevel = this.currentLevel + 1;
+    this.triggerOverLay();
 
-    if (nextLevel > this.game.numLevels) {
+    if (this.nextLevel > this.game.numLevels) {
         console.log("You win!");
     }
     else {
-        this.game.state.restart(true, false, nextLevel);
+        // this.game.state.restart(true, false, this.nextLevel);
     }
 };
 
 NN.GameState.updateBestTime = function() {
     this.bestTime = +localStorage.getItem('bestTime' + this.currentLevel);
-    if (!this.bestTime || this.bestTime > this.timeElapsed) {
-        this.bestTime = this.timeElapsed;
+    if (!this.bestTime || this.bestTime > this.yourTime) {
+        this.bestTime = this.yourTime;
         localStorage.setItem('bestTime' + this.currentLevel, this.bestTime);
         console.log("New Record!!!");
     }
+};
+
+NN.GameState.triggerOverLay = function() {
+    this.overlay = this.add.bitmapData(this.GAMEX, this.GAMEY);
+    this.overlay.ctx.fillStyle = '#000';
+    this.overlay.ctx.fillRect(0, 0, this.GAMEX, this.GAMEY);
+    this.panel = this.add.sprite(0, this.GAMEY, this.overlay);
+    this.panel.alpha = 0.65;
+
+    var levelCompletePanel = this.add.tween(this.panel);
+    levelCompletePanel.to({y: 0}, 500);
+
+    levelCompletePanel.onComplete.add(function() {
+        // TODO add in stopping the timer and the enemies and the player from moving any more.
+        var style = {font: '40px Arial', fill: '#fff'};
+        this.add.text(this.GAMEX/2, this.GAMEY/2 - 90,
+            'Congratulations!', style).anchor.setTo(0.5);
+        this.add.text(this.GAMEX/2, this.GAMEY/2 - 40,
+            'Level Complete!', style).anchor.setTo(0.5);
+        
+        style = {font: '20px Arial', fill: '#fff'};
+        this.add.text(this.GAMEX/2, this.GAMEY/2,
+            'Best Time: ' + this.stringifyTime(this.bestTime), style).anchor.setTo(0.5);
+
+        this.add.text(this.GAMEX/2, this.GAMEY/2 + 30,
+            'Your Time: ' + this.stringifyTime(this.yourTime), style).anchor.setTo(0.5);
+
+        if (this.bestTime == this.yourTime) {
+            style = {font: '30px Arial', fill: '#f80'};
+            this.add.text(this.GAMEX/2, this.GAMEY/2 + 70,
+                    'New Record!!!', style).anchor.setTo(0.5);
+        }
+
+    }, this);
+
+    levelCompletePanel.start();
 };

@@ -19,6 +19,7 @@ NN.GameState.createCharacter = function(handle, startX, startY, direction) {
 };
 
 NN.GameState.updatePlayer = function() {
+    if (this.gameOver) { return };
     if (this.keyboard.left.isDown) {
         this.moveTo(this.player, 'left');
     }
@@ -53,6 +54,7 @@ NN.GameState.updatePlayer = function() {
 };
 
 NN.GameState.moveTo = function(character, direction) {
+    if (this.gameOver) { return };
     // do not move in the middle of a movement.
     if(character.isMoving) {
         return false;
@@ -71,6 +73,7 @@ NN.GameState.moveTo = function(character, direction) {
 };
 
 NN.GameState.face = function (char, direction) {
+    if (this.gameOver) { return };
     char.frame = this.facing[direction];
     char.customParams.facing = direction;
 };
@@ -127,6 +130,7 @@ NN.GameState.onBoard = function (char, dir) {
 };
 
 NN.GameState.nab = function() {
+    if (this.gameOver) { return };
     var posX = this.player.customParams.x;
     var posY = this.player.customParams.y;
 
