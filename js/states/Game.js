@@ -8,7 +8,8 @@ NN.GameState.init = function(currentLevel, hadInstructions) {
     this.game.stage.backgroundColor = '#000';
 
     // level data
-    this.currentLevel = currentLevel ? currentLevel : 1;
+    var highestUnlockedLevel = this.getHighestUnlocked();
+    this.currentLevel = currentLevel ? currentLevel : highestUnlockedLevel;
     this.nextLevel = this.currentLevel + 1;
 
     if (this.currentLevel < 4 && !hadInstructions) {
@@ -111,6 +112,14 @@ NN.GameState.createBackground = function(columns, rows) {
     var scale = this.tileSize / this.tiles.texture.width;
     this.tiles.tileScale.x = scale;
     this.tiles.tileScale.y = scale;
+};
+
+NN.GameState.getHighestUnlocked = function() {
+    for (var i = 1; i <= 20; i++) {
+        if ( !localStorage.getItem('bestTime' + i) ) {
+            return i;
+        }
+    }
 };
 
 NN.GameState.generateNabbedText = function(){

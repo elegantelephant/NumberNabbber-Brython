@@ -32,22 +32,33 @@ NN.LevelSelectorState.create = function() {
             this.recordText.style.fill = '#00f';
             this.recordText.anchor.setTo(0.5, 0);
 
-        if (record[i]) {
-            // show records
-            this.recordText.text = record[i];
+            this.levelText = this.add.text(buttonX, buttonY);
+            this.levelText.style.font = 'bold 50pt Arial';
+            this.levelText.style.fill = '#00f';
+            this.levelText.text = i.toString();
+            this.levelText.anchor.setTo(0.5);
+
+        if (record[i-1] || record[i] || i == 1) {
+            // this level is unlocked ... display level number
+            if (record[i]) {
+                // show records, since they beat this level already
+                this.recordText.text = record[i];
+                this.levelText.style.font = 'bold 30pt Arial';
+                this.levelText.anchor.setTo(0.5, 0.75);
+            }
         }
         else if (!record[i-1] && i > 1) {
-            // unlock if previous level is beaten
-            this.recordText.text = 'LOCK';
-            this.levelsButton.input.enabled = false;
-            // set the 'lock' attribute of this button to 'true' ... somehow
-        }
+            // This level is locked
+            this.levelText.style.font = 'bold 11pt Arial';
+            this.levelText.anchor.setTo(0.5);
+            this.levelText.x += this.levelsButton.width/4;
+            this.levelText.y -= this.levelsButton.width/3.5;
 
-        this.levelText = this.add.text(buttonX, buttonY);
-        this.levelText.style.font = 'bold 30pt Arial';
-        this.levelText.style.fill = '#00f';
-        this.levelText.text = i.toString();
-        this.levelText.anchor.setTo(0.5, 0.75);
+            this.levelLock = this.add.sprite(buttonX, buttonY, 'lock');
+            this.levelLock.anchor.setTo(0.6, 0.5);
+            this.levelLock.scale.setTo(this.levelsButton.width/this.levelLock.width*0.6);
+            this.levelsButton.input.enabled = false;
+        }
 
         i++;
     }

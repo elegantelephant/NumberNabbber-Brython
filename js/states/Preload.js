@@ -17,6 +17,7 @@ NN.PreloadState.preload = function() {
     this.load.image('level_button', 'assets/images/Level_Button.png');
     // TODO create the InstructionsBG.png image
     this.load.image('instructions', 'assets/images/InstructionsBG.png');
+    this.load.image('lock', 'assets/images/Lock_Icon.png');
     this.load.spritesheet('player', 'assets/images/PlayerSheet.png', 100, 100, 4, 0, 0);
     this.load.spritesheet('baddie', 'assets/images/BullySheet.png', 100, 100, 4, 0, 0);
     this.load.spritesheet('level_icons', 'assets/images/levels.png', 64, 64, 5, 0, 0);
