@@ -18,7 +18,7 @@ NN.LevelSelectorState.create = function() {
     while (i <= 20) {
         buttonX = (1 + (i-1) % 4) * this.game.width / 5;
         buttonY = (2 + Math.floor((i-1) / 4)) * this.game.width / 5;
-        this.levelsButton = this.add.button(buttonX, buttonY, 'level_button', NN.LevelSelectorState.startGameState, this),
+        this.levelsButton = this.add.button(buttonX, buttonY, 'level_button', NN.HomeState.startGameState, this);
         this.levelsButton.anchor.setTo(0.5);
         this.levelsButton.width = this.game.width / 5 - 2;
         this.levelsButton.height = this.game.width / 5 - 2;
@@ -27,29 +27,31 @@ NN.LevelSelectorState.create = function() {
         storedRecord = localStorage.getItem('bestTime' + i);
         record[i] = NN.GameState.stringifyTime(storedRecord);
 
-            this.recordText = this.add.text(buttonX, buttonY);
-            this.recordText.style.font = 'bold 18pt Arial';
-            this.recordText.style.fill = '#00f';
-            this.recordText.anchor.setTo(0.5, 0);
+        // display the best time
+        this.recordText = this.add.text(buttonX, buttonY);
+        this.recordText.style.font = 'bold 18pt Arial';
+        this.recordText.style.fill = '#00f';
+        this.recordText.anchor.setTo(0.5, 0);
 
-            this.levelText = this.add.text(buttonX, buttonY);
-            this.levelText.style.font = 'bold 50pt Arial';
-            this.levelText.style.fill = '#00f';
-            this.levelText.text = i.toString();
-            this.levelText.anchor.setTo(0.5);
+        // display the current level
+        this.levelText = this.add.text(buttonX, buttonY);
+        this.levelText.style.font = 'bold 40pt Arial';
+        this.levelText.style.fill = '#00f';
+        this.levelText.text = i.toString();
+        this.levelText.anchor.setTo(0.5, 0.47);
 
         if (record[i-1] || record[i] || i == 1) {
             // this level is unlocked ... display level number
             if (record[i]) {
                 // show records, since they beat this level already
                 this.recordText.text = record[i];
-                this.levelText.style.font = 'bold 30pt Arial';
+                this.levelText.style.font = 'bold 28pt Arial';
                 this.levelText.anchor.setTo(0.5, 0.75);
             }
         }
         else if (!record[i-1] && i > 1) {
             // This level is locked
-            this.levelText.style.font = 'bold 11pt Arial';
+            this.levelText.style.font = 'bold 12pt Arial';
             this.levelText.anchor.setTo(0.5);
             this.levelText.x += this.levelsButton.width/4;
             this.levelText.y -= this.levelsButton.width/3.5;
@@ -62,8 +64,4 @@ NN.LevelSelectorState.create = function() {
 
         i++;
     }
-};
-
-NN.LevelSelectorState.startGameState = function(button) {
-    this.state.start('GameState', true, false, button.customParams.levelNumber);
 };

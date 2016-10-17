@@ -20,8 +20,13 @@ NN.HomeState.create = function() {
     this.levelsButton.scale.setTo(0.5);
 };
 
-NN.HomeState.startGameState = function() {
-    this.state.start('GameState');
+NN.HomeState.startGameState = function(button) {
+    if (button.customParams) {
+        this.state.start('GameState', true, false, button.customParams.levelNumber);
+    }
+    else {
+        this.state.start('GameState');
+    }
 };
 
 NN.HomeState.startLevelSelectorState = function() {

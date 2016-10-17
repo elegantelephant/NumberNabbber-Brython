@@ -374,7 +374,6 @@ NN.GameState.updateBestTime = function() {
     if (!this.bestTime || this.bestTime > this.yourTime) {
         this.bestTime = this.yourTime;
         localStorage.setItem('bestTime' + this.currentLevel, this.bestTime);
-        console.log("New Record!!!");
     }
 };
 
@@ -389,25 +388,52 @@ NN.GameState.triggerOverLay = function() {
     levelCompletePanel.to({y: 0}, 500);
 
     levelCompletePanel.onComplete.add(function() {
-        // TODO add in stopping the timer and the enemies and the player from moving any more.
         var style = {font: '40px Arial', fill: '#fff'};
         this.add.text(this.GAMEX/2, this.GAMEY/2 - 90,
             'Congratulations!', style).anchor.setTo(0.5);
         this.add.text(this.GAMEX/2, this.GAMEY/2 - 40,
             'Level Complete!', style).anchor.setTo(0.5);
         
-        style = {font: '20px Arial', fill: '#fff'};
-        this.add.text(this.GAMEX/2, this.GAMEY/2,
+        style = {font: '30px Arial', fill: '#fff'};
+        this.add.text(this.GAMEX/2, this.GAMEY/2 + 10,
             'Best Time: ' + this.stringifyTime(this.bestTime), style).anchor.setTo(0.5);
 
-        this.add.text(this.GAMEX/2, this.GAMEY/2 + 30,
+        this.add.text(this.GAMEX/2, this.GAMEY/2 + 40,
             'Your Time: ' + this.stringifyTime(this.yourTime), style).anchor.setTo(0.5);
 
         if (this.bestTime == this.yourTime) {
-            style = {font: '30px Arial', fill: '#f80'};
-            this.add.text(this.GAMEX/2, this.GAMEY/2 + 70,
+            style = {font: '35px Arial', fill: '#f80'};
+            this.add.text(this.GAMEX/2, this.GAMEY/2 + 80,
                     'New Record!!!', style).anchor.setTo(0.5);
         }
+
+        this.replayLevelIcon = this.add.button(this.GAMEX/2, this.GAMEY * 3/4, 'level_button', NN.HomeState.startGameState, this);
+        this.replayLevelIcon.customParams = {};
+        this.replayLevelIcon.customParams.levelNumber = this.currentLevel;
+        this.replayLevelIcon.width = this.game.width / 5 - 2;
+        this.replayLevelIcon.height = this.game.width / 5 - 2;
+        this.replayLevelIcon.anchor.setTo(0.5);
+        this.replayArrow = this.add.sprite(this.replayLevelIcon.position.x, this.replayLevelIcon.position.y, 'replay');
+        this.replayArrow.anchor.setTo(0.5);
+        this.replayArrow.scale.setTo(this.replayLevelIcon.width/this.replayArrow.width*0.6);
+
+        this.playNextLevelIcon = this.add.button(this.GAMEX * 3/4, this.GAMEY * 3/4, 'level_button', NN.HomeState.startGameState, this);
+        this.playNextLevelIcon.customParams = {};
+        this.playNextLevelIcon.customParams.levelNumber = this.nextLevel;
+        this.playNextLevelIcon.width = this.game.width / 5 - 2;
+        this.playNextLevelIcon.height = this.game.width / 5 - 2;
+        this.playNextLevelIcon.anchor.setTo(0.5);
+        this.playArrow = this.add.sprite(this.playNextLevelIcon.position.x + 4, this.playNextLevelIcon.position.y, 'continue');
+        this.playArrow.anchor.setTo(0.5);
+        this.playArrow.scale.setTo(this.playNextLevelIcon.width/this.playArrow.width*0.6);
+
+        this.levelSelectorIcon = this.add.button(this.GAMEX/4, this.GAMEY * 3/4, 'level_button', NN.HomeState.startLevelSelectorState, this);
+        this.levelSelectorIcon.width = this.game.width / 5 - 2;
+        this.levelSelectorIcon.height = this.game.width / 5 - 2;
+        this.levelSelectorIcon.anchor.setTo(0.5);
+        this.menuIcon = this.add.sprite(this.levelSelectorIcon.position.x, this.levelSelectorIcon.position.y, 'menu');
+        this.menuIcon.anchor.setTo(0.5);
+        this.menuIcon.scale.setTo(this.levelSelectorIcon.width/this.menuIcon.width*0.6);
 
     }, this);
 
