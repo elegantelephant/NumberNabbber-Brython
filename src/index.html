@@ -1,35 +1,46 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-		<title>Number Nabber</title>
-		<script type="text/javascript" src="js/phaser.js"></script>
-		<style>
-		  body {
-		    padding: 0px;
-		    margin: 0px;
-		    background-color: gray;
-		  }
-		  </style>
-	</head>
+<head>
+<meta charset="utf-8" />
+<!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />-->
 
-	<body>
-		<!-- include the main game file -->
-		<script src="js/states/Boot.js"></script>
-		<script src="js/states/Preload.js"></script>
-		<script src="js/states/Home.js"></script>
-		<script src="js/states/LevelSelector.js"></script>
-		<script src="js/states/Game.js"></script>
-		<script src="js/states/Instructions.js"></script>
-		<script src="js/states/Game/Character.js"></script>
-		<script src="js/states/Game/Baddie.js"></script>
-		<script src="js/library.js"></script>
-		<script src="js/prefabs/Level.js"></script>
-		<script src="js/prefabs/Grid.js"></script>
-		<script src="js/prefabs/Tile.js"></script>
-		<script src="js/prefabs/Player.js"></script>
-		<script src="js/prefabs/Baddie.js"></script>
-		<script src="js/main.js"></script>
-	</body>
+<title>Number Nabber</title>
+
+<style>
+body {
+    padding: 0px;
+    margin: 0px;
+    background-color: gray;
+}
+</style>
+
+<script type="text/javascript" src="brython.js"></script>
+<script type="text/javascript" src="js/phaser.js"></script>
+<!--<script type="text/javascript" src="brython_stdlib.js"></script>-->
+<script type="text/python" src="start.py"></script>
+</head>
+
+<body onload="brython()">
+<!-- include the main game file -->
+<!--<script src="js/states/Boot.js"></script>
+<script src="js/states/Preload.js"></script>
+<script src="js/states/Home.js"></script>
+<script src="js/states/LevelSelector.js"></script>
+<script src="js/states/Game.js"></script>
+<script src="js/states/Instructions.js"></script>
+<script src="js/states/Game/Character.js"></script>
+<script src="js/states/Game/Baddie.js"></script>
+<script src="js/library.js"></script>
+<script src="js/prefabs/Level.js"></script>
+<script src="js/prefabs/Grid.js"></script>
+<script src="js/prefabs/Tile.js"></script>
+<script src="js/prefabs/Player.js"></script>
+<script src="js/prefabs/Baddie.js"></script>
+<script src="js/main.js"></script>-->
+
+<div id="main">
+  <p><div id="game"></div></p>
+</div>
+
+</body>
 </html>
