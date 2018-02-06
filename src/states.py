@@ -32,7 +32,20 @@ def is_locked(level):
 def get_best_time(level):
     'Returns the best time for the given level'
 
-    return local.get('bestTime{}'.format(level), None)
+    return int(float(local.get('bestTime{}'.format(level), 0)))
+
+
+def get_current_level():
+    'Returns the current level number'
+
+    current = 1
+
+    for level in range(2, 21):
+        if is_locked(level):
+            break
+        current = level
+
+    return current
 
 
 def set_best_time(level, time):
@@ -159,7 +172,9 @@ def home():
         # TODO: Check for customParams.level_number
 
         custom_params = getattr(button, 'customParams', {})
-        level = custom_params.get('level', 1)
+        level = custom_params.get('level', None)
+        if level is None:
+            level = get_current_level()
         print('setting session["level"] to {}'.format(level))
         session['level'] = str(level)
         game.GAME.state.start('play')
@@ -208,7 +223,7 @@ def level_selector():
                 (level - 1) // row_length - row_count / 2 + 0.5
             ) * button_width + center_y
             button = game.GAME.add.button(
-                pos_x, pos_y, 'level_button', STATES['home']['play'], level)
+                pos_x, pos_y, 'level_button', STATES['home']['play'])
             # Note: Changing the anchor changes the position. Could this be
             # useful for later things, such as a scrolling background?
             button.anchor.setTo(0.5)
