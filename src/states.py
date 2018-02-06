@@ -1,9 +1,50 @@
 'Game states'
 
 import game
+from browser.local_storage import storage as local
+from browser.session_storage import storage as session
 from browser import window
 
 STATES = None
+
+
+def format_time(total_seconds):
+    'Formats a number of seconds as mm:ss'
+    total_seconds = int(float(total_seconds))  # In case we get a string
+    minutes = total_seconds // 60
+    seconds = total_seconds % 60
+    return '{:0>2}:{:0>2}'.format(minutes, seconds)
+
+
+def is_locked(level):
+    """
+    Returns True or False to indicate whether the specified level is locked.
+
+    A level is locked if the previous level exists and has no best time.
+    """
+
+    if level == 1:
+        return False
+
+    return not get_best_time(level - 1)
+
+
+def get_best_time(level):
+    'Returns the best time for the given level'
+
+    return local.get('bestTime{}'.format(level), None)
+
+
+def set_best_time(level, time):
+    'Sets the best time for the given level, if better than the current best'
+
+    # TODO: This method of storing times works, but it's pretty ugly.
+    # Maybe look into abstracting the storage object with a wrapper
+    # that JSON-ifies values going in?
+    previous_best = get_best_time(level)
+
+    if not previous_best or time < get_best_time(level):
+        local['bestTime{}'.format(level)] = time
 
 
 def boot():
@@ -102,7 +143,7 @@ def home():
         height = game.GAME.height
 
         play_button = game.GAME.add.button(
-            width / 2, height * 2 / 3, 'play_button', _start_game)
+            width / 2, height * 2 / 3, 'play_button', _play)
         play_button.anchor.setTo(0.5)
         play_button.scale.setTo(0.5)
 
@@ -111,14 +152,17 @@ def home():
         levels_button.anchor.setTo(0.5)
         levels_button.scale.setTo(0.5)
 
-    def _start_game(button, event, unknown_flag):
+    # TODO: The third parameter is boolean, but what does it mean?
+    def _play(button, event, _):
         'Switch to the game state'
 
-        if button.customParams:
-            game.GAME.state.start(
-                'play', True, False, button.customParams.levelNumber)
-        else:
-            game.GAME.state.start('play')
+        # TODO: Check for customParams.level_number
+
+        custom_params = getattr(button, 'customParams', {})
+        level = custom_params.get('level', 1)
+        print('setting session["level"] to {}'.format(level))
+        session['level'] = str(level)
+        game.GAME.state.start('play')
 
     def _start_level_selector():
         'Switch to the level selector state'
@@ -128,15 +172,74 @@ def home():
     return {
         'init': _init,
         'create': _create,
+        'play': _play,
     }
 
 
 def level_selector():
     'Level selector game state - allows the player to choose a level'
 
+    def _init():
+        'Phaser state hook'
+
+        print('level_selector state init hook')
+        game.GAME.stage.backgroundColor = '#000'
+
     def _create():
         'Phaser state hook'
+
         print('level_selector state create hook')
+        levels = 20
+        row_length = 4
+        row_count = levels / row_length
+        width = game.GAME.width
+        button_width = width / (row_length + 1)
+        center_x = game.GAME.world.centerX
+        center_y = game.GAME.world.centerY
+
+        # Lay out the level buttons
+        for level in range(1, levels + 1):
+            # Find position, starting from the center of the screen
+            # Assumes square buttons for now
+            pos_x = (
+                (level - 1) % row_length - row_length / 2 + 0.5
+            ) * button_width + center_x
+            pos_y = (
+                (level - 1) // row_length - row_count / 2 + 0.5
+            ) * button_width + center_y
+            button = game.GAME.add.button(
+                pos_x, pos_y, 'level_button', STATES['home']['play'], level)
+            # Note: Changing the anchor changes the position. Could this be
+            # useful for later things, such as a scrolling background?
+            button.anchor.setTo(0.5)
+
+            button.width = button.height = button_width
+            button.customParams = {}
+            button.customParams['level'] = level
+
+            best_time = get_best_time(level)
+            if best_time is not None:
+                size = button_width // 5
+                record_text = game.GAME.add.text(pos_x, pos_y)
+                record_text.text = format_time(best_time)
+                record_text.style.font = 'bold {}pt Arial'.format(size)
+                record_text.style.fill = '#00f'
+                record_text.anchor.setTo(0.5, -0.4)
+
+            if is_locked(level):
+                print('level {} is locked'.format(level))
+                level_lock = game.GAME.add.sprite(pos_x, pos_y, 'lock')
+                level_lock.anchor.setTo(0.5, 0.6)
+                level_lock.width = level_lock.height = button.width * 0.5
+                button.inputEnabled = False
+            else:
+                print('level {} is not locked'.format(level))
+                level_text = game.GAME.add.text(pos_x, pos_y)
+                level_text.text = str(level)
+                size = button_width // 2
+                level_text.style.font = 'bold {}pt Arial'.format(size)
+                level_text.style.fill = '#00f'
+                level_text.anchor.setTo(0.5, 0.60)
 
     return {
         'create': _create,
@@ -146,8 +249,10 @@ def level_selector():
 def play():
     'Play game state - allows the user to play the game!'
 
-    def _create(level_number=1):
+    # First argument is the game object.
+    def _create():
         'Phaser state hook'
+        level_number = int(session.get('level', 1))
         print('play state create hook, level number: {}'.format(level_number))
 
     return {
