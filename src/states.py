@@ -11,6 +11,8 @@ STATES = None
 def format_time(total_seconds):
     'Formats a number of seconds as mm:ss'
     total_seconds = int(float(total_seconds))  # In case we get a string
+    if not total_seconds:
+        return ''
     minutes = total_seconds // 60
     seconds = total_seconds % 60
     return '{:0>2}:{:0>2}'.format(minutes, seconds)
