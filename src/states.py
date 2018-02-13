@@ -1,11 +1,14 @@
 'Game states'
 
-import game
+import json
 from browser.local_storage import storage as local
 from browser.session_storage import storage as session
 from browser import window
 
+import game
+
 STATES = None
+LEVELS = None
 
 
 def format_time(total_seconds):
@@ -48,6 +51,11 @@ def get_current_level():
         current = level
 
     return current
+
+
+def get_level_data():
+    'Read in the level data'
+    return json.loads(game.GAME.cache.getText('levels'))
 
 
 def set_best_time(level, time):
@@ -94,6 +102,7 @@ def preload():
     def _preload():
         'Phaser state hook'
         print('preload state _preload() function')
+
         # TODO: Change this secondary logo to be the NN icon
         # TODO: Change splash page from the cordova image to my EE image
         game.GAME.stage.backgroundColor = '#aaa'
@@ -127,6 +136,10 @@ def preload():
         'Phaser state hook'
 
         print('preload state _create() function')
+
+        # Populate our level data
+        global LEVELS
+        LEVELS = get_level_data()
 
         def next_state():
             'Start the next state'
@@ -266,13 +279,59 @@ def level_selector():
 def play():
     'Play game state - allows the user to play the game!'
 
+    game_data = {}
+
+    def _init(do_instructions=True):
+        'Phaser state hook'
+        game.GAME.stage.backgroundColor = '#000'
+        game_data['level'] = int(session['level'])
+        print('Initializing play() state for level {}'.format(
+            game_data['level']))
+
+        if game_data['level'] < 4 and do_instructions:
+            print('We would call the instructions state here')
+            # TODO: Un-comment and test this
+            # game.GAME.state.start('instructions')
+
+        game_data['game_over'] = False
+        game_data['keyboard'] = game.GAME.input.keyboard.createCursorKeys()
+        game_data['keyboard'].space = game.GAME.input.keyboard.addKey(
+            window.Phaser.KeyCode.SPACEBAR)
+
+        game_data['facing'] = {
+            'down': 0,
+            'left': 2,
+            'up': 3,
+            'right': 1,
+        }
+
+    def _setup_board():
+        level = game_data['level']
+        # Use the center of the bottom as the origin for these positions
+        base_x = game.GAME.world.centerX
+        base_y = game.GAME.world.height
+        columns = LEVELS[level]['columns']
+        rows = LEVELS[level]['rows']
+        space_size = game.GAME.width // columns
+        for column in range(columns):
+            for row in range(rows):
+                pos_x = base_x + space_size * (-(columns / 2.0) + column + 0.5)
+                pos_y = base_y + space_size * (-rows + row + 0.5)
+                tile = game.GAME.add.sprite(
+                    pos_x, pos_y, 'tile')
+                tile.anchor.setTo(0.5)
+                tile.width = tile.height = space_size
+
     # First argument is the game object.
     def _create():
         'Phaser state hook'
-        level_number = int(session.get('level', 1))
-        print('play state create hook, level number: {}'.format(level_number))
+        print('play state create hook, level number: {}'.format(
+            game_data['level']))
+        _setup_board()
+        # player = game.GAME.createCharacter('player', 0, 0, 'right')
 
     return {
+        'init': _init,
         'create': _create,
     }
 

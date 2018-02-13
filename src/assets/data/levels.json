@@ -1,102 +1,125 @@
-{
-    "level1": {
-        "rows"   : 4,
+[
+    {
+        "dummy": 0
+    },
+    {
+        "level_number": 1,
+        "rows": 4,
         "columns": 3,
         "baddies": 0
     },
-    "level2": {
-        "rows"   : 4,
+    {
+        "level_number": 2,
+        "rows": 4,
         "columns": 3,
         "baddies": 0
     },
-    "level3": {
-        "rows"   : 4,
+    {
+        "level_number": 3,
+        "rows": 4,
         "columns": 4,
         "baddies": 0
     },
-    "level4": {
-        "rows"   : 4,
+    {
+        "level_number": 4,
+        "rows": 4,
         "columns": 4,
         "baddies": 1
     },
-    "level5": {
-        "rows"   : 6,
+    {
+        "level_number": 5,
+        "rows": 6,
         "columns": 5,
         "baddies": 3
     },
-    "level6": {
-        "rows"   : 5,
+    {
+        "level_number": 6,
+        "rows": 5,
         "columns": 4,
         "baddies": 2
     },
-    "level7": {
-        "rows"   : 5,
+    {
+        "level_number": 7,
+        "rows": 5,
         "columns": 4,
         "baddies": 2
     },
-    "level8": {
-        "rows"   : 5,
+    {
+        "level_number": 8,
+        "rows": 5,
         "columns": 5,
         "baddies": 3
     },
-    "level9": {
-        "rows"   : 5,
+    {
+        "level_number": 9,
+        "rows": 5,
         "columns": 5,
         "baddies": 3
     },
-    "level10": {
-        "rows"   : 7,
+    {
+        "level_number": 10,
+        "rows": 7,
         "columns": 6,
         "baddies": 6
     },
-    "level11": {
-        "rows"   : 6,
+    {
+        "level_number": 11,
+        "rows": 6,
         "columns": 6,
         "baddies": 5
     },
-    "level12": {
-        "rows"   : 6,
+    {
+        "level_number": 12,
+        "rows": 6,
         "columns": 5,
         "baddies": 4
     },
-    "level13": {
-        "rows"   : 6,
+    {
+        "level_number": 13,
+        "rows": 6,
         "columns": 5,
         "baddies": 4
     },
-    "level14": {
-        "rows"   : 6,
+    {
+        "level_number": 14,
+        "rows": 6,
         "columns": 5,
         "baddies": 4
     },
-    "level15": {
-        "rows"   : 6,
+    {
+        "level_number": 15,
+        "rows": 6,
         "columns": 5,
         "baddies": 4
     },
-    "level16": {
-        "rows"   : 6,
+    {
+        "level_number": 16,
+        "rows": 6,
         "columns": 5,
         "baddies": 4
     },
-    "level17": {
-        "rows"   : 6,
+    {
+        "level_number": 17,
+        "rows": 6,
         "columns": 5,
         "baddies": 4
     },
-    "level18": {
-        "rows"   : 6,
+    {
+        "level_number": 18,
+        "rows": 6,
         "columns": 5,
         "baddies": 4
     },
-    "level19": {
-        "rows"   : 6,
+    {
+        "level_number": 19,
+        "rows": 6,
         "columns": 5,
         "baddies": 4
     },
-    "level20": {
-        "rows"   : 9,
+    {
+        "level_number": 20,
+        "rows": 9,
         "columns": 7,
         "baddies": 10
     }
-}
+]
